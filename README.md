@@ -1,8 +1,11 @@
-There are multiple branches in this repository.
 
-You can access them from the above dwopdown option.
-or from the link below:
+<h1 align="center">Hi 👋, I'm Prashant Maharjan</h1>
+<h3 align="center">Here You will find multiple branches of different pages made for the project</h3>
 
-login : https://github.com/rockey223/rough/tree/login
-signup: https://github.com/rockey223/rough/tree/signup
+- 🔭 I’m currently working on Online movie ticket booking app [online movie ticket booking](https://github.com/rockey223/rough.git)
+<h2>Pages </h2>
 
+-  Login Page: [Click Here](https://github.com/rockey223/rough/tree/login)
+-  Signup Page: [Click Here](https://github.com/rockey223/rough/tree/signup)
+<p align="left">
+</p>
