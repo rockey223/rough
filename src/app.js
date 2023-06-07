@@ -47,17 +47,17 @@ app.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return next (console.log("enter email and password"));
+    return next (res.status(400).send("enter email and password"));
   }
   const user = await User.findOne({ email: email }).select("+password");
 
   if (!user) {
-   return next (console.log("Invalid email or password"));
+   return next (res.status(404).send("invalid email or password"));
   }
   const isPasswordMatch = await user.comparePassword(password);
 
   if (!isPasswordMatch) {
-    return next(console.log("invalid password"));
+    return next(res.status(400).send("invalid password"));
   }
 
   res.send("logged in");
@@ -76,7 +76,7 @@ app.post("/upload", (req, res) => {
       });
       newMovie
         .save()
-        .then(() => res.send("upload sucess"))
+        .then(() => res.status(200).send("upload sucess"))
         .catch((err) => console.log(err));
     }
   });
@@ -85,7 +85,7 @@ app.post("/upload", (req, res) => {
 app.get("/movie", async (req, res) => {
   try {
     const MovieList = await movie.find();
-    res.json(MovieList);
+    res.status(200).json(MovieList);
   } catch (e) {
     res.status(400).send(e);
   }
@@ -94,7 +94,7 @@ app.get("/movie", async (req, res) => {
 app.get("/user", async (req, res) => {
   try {
     const userList = await User.find();
-    res.json(userList);
+    res.status(200).json(userList);
   } catch (e) {
     res.status(400).send(e);
   }
