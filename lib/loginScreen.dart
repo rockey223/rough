@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 
 class loginScreen extends StatefulWidget {
   const loginScreen({super.key});
@@ -13,6 +15,11 @@ class _loginScreenState extends State<loginScreen> {
 // controller for getting value from text field
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
+  void resetControllers() {
+    username.clear();
+    password.clear();
+  }
+
   String _error = "";
   @override
   Widget build(BuildContext context) {
@@ -64,18 +71,46 @@ class _loginScreenState extends State<loginScreen> {
               style: TextStyle(color: Color.fromRGBO(189, 6, 6, 1)),
             ),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   var Email = username.text;
                   var Password = password.text;
-                  if (Email == "hello" && Password == "1234") {
-                    _error = "";
-                    username.clear();
-                    password.clear();
+
+                  var response = await http.post(
+                    Uri.parse('http://localhost:8000/login'),
+                    headers: <String, String>{
+                      'Content-Type': 'application/json; charset=UTF-8',
+                    },
+                    body: jsonEncode(<String, String>{
+                      'email': Email,
+                      'password': Password,
+                    }),
+                  );
+                  if (response.statusCode == 200) {
+                    // Data posted successfully
+                    // Handle the response here if needed
+                    print(response.body);
+                    resetControllers();
+                    Fluttertoast.showToast(
+                      msg: response.body,
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: Colors.green,
+                      textColor: Colors.white,
+                    );
                   } else {
-                    setState(() {
-                      _error = "Email and password didn't match";
-                    });
+                    // Error occurred during data posting
+                    // Handle the error here if needed
+                    print(response.statusCode);
                   }
+                  // if (Email == "hello" && Password == "1234") {
+                  //   _error = "";
+                  //   username.clear();
+                  //   password.clear();
+                  // } else {
+                  //   setState(() {
+                  //     _error = "Email and password didn't match";
+                  //   });
+                  // }
                 },
                 child: Text(
                   "Login",
