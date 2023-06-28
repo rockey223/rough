@@ -11,6 +11,15 @@ const movieSchema = new mongoose.Schema({
         // data:Buffer,
         // contentType: String
         type: String,
+    },
+    description:{
+        type: String
+    },
+    genre:{
+        type:String
+    },
+    censor:{
+        type:String
     }
 
      

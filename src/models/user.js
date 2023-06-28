@@ -27,6 +27,7 @@ userSchema.pre("save", async function (next) {
     }
   
     this.password = await bcrypt.hashSync(this.password, 14);
+    this.confirmPassword = await bcrypt.hashSync(this.confirmPassword,14);
   });
 
 
