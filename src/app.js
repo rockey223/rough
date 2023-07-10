@@ -45,6 +45,32 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+
+
+
+app.post("/register", async (req, res) => {
+  try {
+    // const useSeat = new UserSeat(req.body);
+    const { fullname, phone, email, userReservedSeat } = req.body;
+    console.log(req.body); 
+    const userseat = new UserSeat({
+      fullname,
+      phone,
+      email,
+      userReservedSeat
+    });
+    
+      const registerUser = await userseat.save();
+      res.status(200).send("register");
+   
+  } catch (e) {
+    console.log(e)
+    res.status(400).send(e);
+  }
+});
+
+
+
 // app.post("/seat", async (req, res) => {
 //   try {
 //     console.log(req.body);
@@ -208,7 +234,7 @@ app.post("/upload", (req, res) => {
       const newMovie = new movie({
         name: req.body.name,
         releaseDate: req.body.releaseDate,
-        image: `http://localhost:8000/uploads/${req.file.filename}`,
+        image: `/uploads/${req.file.filename}`,
         description: req.body.description,
         genre: req.body.genre,
         censor: req.body.censor,
